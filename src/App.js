@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import logo from './logo.svg';
 
 import './App.css';
 import AppNav from './components/AppNav'
 import CocktailList from './components/CocktailList'
 import SearchForm from './components/SearchForm'
+import CocktailDetails from './components/CocktailDetails'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -21,8 +21,10 @@ function App() {
           <Route exact path="/">
             <CocktailList searchTerm={searchTerm} />
           </Route>
-          <Route path="/details">
+          <Route path="/cocktail/:id">
+            <CocktailDetails />
           </Route>
+
         </Switch>
 
       </Router>
