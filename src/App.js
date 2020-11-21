@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import logo from './logo.svg';
-import fetchCocktail from './helpers/cocktail.service'
+
 import './App.css';
+import AppNav from './components/AppNav'
+import CocktailList from './components/CocktailList'
+import SearchForm from './components/SearchForm'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [cocktailList, setCockTailList] = useState([])
 
-  useEffect(() => {
-    if (!cocktailList) return
-    fetchCocktail({ getList: true, search: 'gin' }).then(setCockTailList)
-
-  }, [])
-
-  let cocktailElements = null
-  if (cocktailList.drinks) {
-    cocktailElements = cocktailList.drinks.map(cocktail =>
-      <div key={cocktail.idDrink} className="cocktail">
-        <p>{cocktail.strDrink}</p>
-        <img src={cocktail.strDrinkThumb} alt="the cocktail image" />
-      </div>
-    )
-  }
 
   return (
     <div className="Random Cocktail App">
-      {cocktailElements}
+      <Router>
+        <AppNav />
+        <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
+
+        <Switch>
+          <Route exact path="/">
+            <CocktailList searchTerm={searchTerm} />
+          </Route>
+          <Route path="/details">
+          </Route>
+        </Switch>
+
+      </Router>
     </div>
   );
 }
