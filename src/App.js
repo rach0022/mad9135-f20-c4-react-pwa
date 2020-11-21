@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
 import './App.css';
+import AppNav from './components/AppNav'
+import CocktailList from './components/CocktailList'
+import SearchForm from './components/SearchForm'
+import CocktailDetails from './components/CocktailDetails'
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('')
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="Random Cocktail App">
+      <Router>
+        <AppNav />
+        <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
+
+        <Switch>
+          <Route exact path="/">
+            <CocktailList searchTerm={searchTerm} />
+          </Route>
+          <Route path="/cocktail/:id">
+            <CocktailDetails />
+          </Route>
+
+        </Switch>
+
+      </Router>
     </div>
   );
 }
