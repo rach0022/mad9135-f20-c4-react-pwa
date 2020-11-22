@@ -13,7 +13,7 @@
 
 ### App features/behaviour
 
-- [ ] At least two pages with a summary/detail navigation using React Router
+- [x] At least two pages with a summary/detail navigation using React Router
 - [ ] The main page should feature an image
 - [ ] The app should use a custom Google Font
 - [ ] All UI assets should be pre-cached
@@ -26,14 +26,14 @@
 
 ### Code management
 
-- [ ] Your main branch should be protected
-- [ ] All development should be done on a dev branch or a feature branch
+- [x] Your main branch should be protected
+- [x] All development should be done on a dev branch or a feature branch
 - [ ] When each feature is complete and ready to merge into the main branch, create a pull request and have your partner review the code and approve the pull request.
 
 ### Submission
 
 - [x] Create a private repo on GitHub with the name mad9135-f20-c4-react-pwa.
-- [ ] Your pair programming partner should be a collaborator on your repo.
+- [x] Your pair programming partner should be a collaborator on your repo.
 - [ ] Deploy the production build to Netlify.
 - [ ] Refer to the React production deployment guide.
 - [ ] Invite GitHub user rlmckenney as a collaborator on your private repo.
