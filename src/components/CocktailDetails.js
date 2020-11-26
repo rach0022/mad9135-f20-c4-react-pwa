@@ -32,7 +32,7 @@ function CocktailDetails() {
             }
 
             const ingrediantElements = ingrediants.map(ingrediant =>
-                <p key={`ingrediant-${ingrediant}`}>{ingrediant}</p>
+                <p key={`ingredient-${ingrediant}`}>{ingrediant}</p>
             )
 
             // after dealing with the ingrediants array we can return the jsx element of the cocktail
