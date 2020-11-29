@@ -20,15 +20,16 @@ function CocktailList ({ searchTerm }) {
   let cocktailElements = cocktailList.drinks ? (
     cocktailList.drinks
       .map(cocktail => (
-        <div className='col s12 m6 l3' key={cocktail.idDrink}>
+        <div className='col s12 m6 l4' key={cocktail.idDrink}>
           {/* <div className='col s12 m2'> */}
           <div className='card'>
             <div className='card-image'>
               <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
-              <span className='card-title'>{cocktail.strDrink}</span>
             </div>
             <div className='card-action'>
-              <Link to={`/cocktail/${cocktail.idDrink}`}>Ingredients</Link>
+              <Link to={`/cocktail/${cocktail.idDrink}`}>
+                <p class='flow-text'>{cocktail.strDrink} </p>
+              </Link>
             </div>
           </div>
           {/* </div> */}
