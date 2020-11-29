@@ -15,7 +15,7 @@ function CocktailList({ searchTerm }) {
   // now with the list we can create the cocktailElements to display by checking if we have the
   // cocktailList.drinks object otherwise we can return an empty
 
-  const randomNum = Math.floor(Math.random() * 90 + 0);
+  const randomNum = (cocktailList.drinks) ? Math.floor(Math.random() * (cocktailList.drinks.length - 3) + 0) : 0;
 
   let cocktailElements = cocktailList.drinks ? (
     cocktailList.drinks
@@ -29,8 +29,8 @@ function CocktailList({ searchTerm }) {
       ))
       .splice(randomNum, randomNum + 10)
   ) : (
-    <div>Search for a valid alcoholic ingredient</div>
-  );
+      <div>Search for a valid alcoholic ingredient</div>
+    );
 
   // return the cocktail elements
   return <div>{cocktailElements}</div>;

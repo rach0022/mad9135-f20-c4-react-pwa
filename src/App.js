@@ -15,10 +15,9 @@ function App() {
     <div className="Random Cocktail App">
       <Router>
         <AppNav />
-        <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
-
         <Switch>
           <Route exact path="/">
+            <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
             <CocktailList searchTerm={searchTerm} />
           </Route>
           <Route path="/cocktail/:id">
