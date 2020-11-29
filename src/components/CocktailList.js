@@ -23,7 +23,6 @@ function CocktailList({ searchTerm }) {
     cocktailList.drinks
       .map((cocktail) => (
         <div className="col s12 m6 l4" key={cocktail.idDrink}>
-          {/* <div className='col s12 m2'> */}
           <div className="card">
             <div className="card-image">
               <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
@@ -34,20 +33,12 @@ function CocktailList({ searchTerm }) {
               </Link>
             </div>
           </div>
-          {/* </div> */}
         </div>
-
-        // <Link to={`/cocktail/${cocktail.idDrink}`}>
-        //   <div key={cocktail.idDrink} className='cocktail'>
-        //     <p>{cocktail.strDrink}</p>
-        //     <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
-        //   </div>
-        // </Link>
       ))
-      .splice(randomNum, randomNum + 10)
+      .slice(randomNum, randomNum + 10)
   ) : (
-    <div>Search for a valid alcoholic ingredient</div>
-  );
+      <div>Search for a valid alcoholic ingredient</div>
+    );
 
   // return the cocktail elements
   return (
