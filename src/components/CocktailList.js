@@ -9,31 +9,43 @@ function CocktailList({ searchTerm }) {
   useEffect(() => {
     fetchCocktail({ getList: true, search: searchTerm })
       .then(setCocktailList)
-      .catch(err => setCocktailList(""));
+      .catch((err) => setCocktailList(""));
   }, [searchTerm]);
 
   // now with the list we can create the cocktailElements to display by checking if we have the
   // cocktailList.drinks object otherwise we can return an empty
 
-  const randomNum = Math.floor(Math.random() * 90 + 0);
+  const randomNum = cocktailList.drinks
+    ? Math.floor(Math.random() * (cocktailList.drinks.length - 3) + 0)
+    : 0;
 
   let cocktailElements = cocktailList.drinks ? (
     cocktailList.drinks
-      .map(cocktail => (
-        <Link to={`/cocktail/${cocktail.idDrink}`}>
-          <div key={cocktail.idDrink} className="cocktail">
-            <p>{cocktail.strDrink}</p>
-            <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
+      .map((cocktail) => (
+        <div className="col s12 m6 l4" key={cocktail.idDrink}>
+          <div className="card">
+            <div className="card-image">
+              <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
+            </div>
+            <div className="card-action">
+              <Link to={`/cocktail/${cocktail.idDrink}`}>
+                <p className="flow-text">{cocktail.strDrink} </p>
+              </Link>
+            </div>
           </div>
-        </Link>
+        </div>
       ))
-      .splice(randomNum, randomNum + 10)
+      .slice(randomNum, randomNum + 10)
   ) : (
-    <div>Search for a valid alcoholic ingredient</div>
-  );
+      <div>Search for a valid alcoholic ingredient</div>
+    );
 
   // return the cocktail elements
-  return <div>{cocktailElements}</div>;
+  return (
+    <div className="container CocktailList">
+      <div className="row">{cocktailElements}</div>
+    </div>
+  );
 }
 
 export default CocktailList;

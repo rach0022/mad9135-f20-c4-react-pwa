@@ -11,12 +11,14 @@ function CocktailDetails() {
     // now we can fetch the specific cocktail details with the useEffect function
     // and set the depandancies as the id
     useEffect(() => {
-        fetchCocktail({ getList: false, search: `${id}` }).then(setCocktail).catch(err => setCocktail(''))
+        fetchCocktail({ getList: false, search: `${id}` })
+            .then(setCocktail)
+            .catch(err => setCocktail(''))
     }, [id])
 
-    // now we can create the cocktailElements by checking if we have a cocktail.drinks 
+    // now we can create the cocktailElements by checking if we have a cocktail.drinks
     // (From the cocktail api) and then map the cocktail to a specific drink element
-    const cocktailElement = (cocktail.drinks)
+    const cocktailElement = cocktail.drinks
         ? cocktail.drinks.map(cocktail => {
             // because the ingrediants and the measurements come in the object
             // cocktail.strIngrediant1...2...etc we can loop through each object
@@ -24,33 +26,45 @@ function CocktailDetails() {
             // and the ingrediant to display in seperate elements for styling
             let ingrediants = []
             for (let i = 1; i <= 15; i++) {
-                console.log(cocktail[`strIngredient1`])
 
                 if (cocktail[`strIngredient${i}`] !== null) {
-                    ingrediants.push([cocktail[`strIngredient${i}`], cocktail[`strMeasure${i}`]])
+                    ingrediants.push([
+                        cocktail[`strIngredient${i}`],
+                        ' ',
+                        cocktail[`strMeasure${i}`]
+                    ])
                 }
             }
 
-            const ingrediantElements = ingrediants.map(ingrediant =>
+            const ingrediantElements = ingrediants.map(ingrediant => (
                 <p key={`ingredient-${ingrediant}`}>{ingrediant}</p>
-            )
+            ))
 
             // after dealing with the ingrediants array we can return the jsx element of the cocktail
-            return (<div key={cocktail.idDrink} className="cocktail">
-                <img src={cocktail.strDrinkThumb} alt={`${cocktail.strDrink}`} />
-                <h1>{cocktail.strDrink}</h1>
-                <p>{cocktail.strInstructions}</p>
-                {ingrediantElements}
-            </div>)
+            return (
+                <div key={cocktail.idDrink} className='col s12 m7 cocktail'>
+                    <h2 className='header'>{cocktail.strDrink}</h2>
+                    <div className='card horizontal'>
+                        <div className='card-image'>
+                            <img
+                                src={cocktail.strDrinkThumb}
+                                alt={`${cocktail.strDrink}`}
+                            />
+                        </div>
+                        <div className='card-stacked'>
+                            <div className='card-content'>
+                                <p>{cocktail.strInstructions}</p>
+                                {ingrediantElements}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
         })
         : null
 
     // return the cocktailElement which is either empty or has the cocktail details
-    return (
-        <div>
-            {cocktailElement}
-        </div>
-    )
+    return <div className="CocktailDetails">{cocktailElement}</div>
 }
 
 export default CocktailDetails

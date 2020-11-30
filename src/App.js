@@ -4,21 +4,21 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import AppNav from './components/AppNav'
 import CocktailList from './components/CocktailList'
+import InstallBanner from './components/InstallBanner'
 import SearchForm from './components/SearchForm'
 import CocktailDetails from './components/CocktailDetails'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-
+  // const [homeCounter, setHomeCounter] = useState(0)
 
   return (
     <div className="Random Cocktail App">
       <Router>
         <AppNav />
-        <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
-
         <Switch>
           <Route exact path="/">
+            <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
             <CocktailList searchTerm={searchTerm} />
           </Route>
           <Route path="/cocktail/:id">
