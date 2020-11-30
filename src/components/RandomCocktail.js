@@ -14,14 +14,15 @@ function RandomCocktail({ mappingFunction }) {
 
     // create the cocktail element using hte supplied mapping function
     const cocktailElement = cocktail ? cocktail.drinks.map(mappingFunction) : null
-    console.log(cocktail)
+
+    // return the random drink which will be rendered as the home page when the search list is empty
+    // using the values of strIngredient1 and 2 we can render them as possible search choices or display sugar and gin
+    // if they dont exist
     return (
-        <div className="container">
+        <div className="RandomCocktail container">
             <h1>Welcome to the Random Cocktail App</h1>
-            <h4>Search for an alcoholic ingrediant like "sugar" or "gin" and get a random cocktail like below</h4>
-            <div className="col">
-                {cocktailElement}
-            </div>
+            <h4>Search for an alcoholic ingrediant like "{cocktail?.drinks[0].strIngredient1 || 'sugar'}" or "{cocktail?.drinks[0].strIngredient2 || "gin"}" and get a random cocktail like below</h4>
+            {cocktailElement}
         </div>
     )
 }

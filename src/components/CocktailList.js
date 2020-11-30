@@ -13,7 +13,7 @@ function CocktailList({ searchTerm }) {
   useEffect(() => {
     fetchCocktail({ getList: true, search: searchTerm })
       .then(setCocktailList)
-      .catch((err) => setCocktailList(""));
+      .catch((err) => setCocktailList(err));
   }, [searchTerm]);
 
   // now with the list we can create the cocktailElements to display by checking if we have the
@@ -54,7 +54,9 @@ function CocktailList({ searchTerm }) {
 
   // check if we have a random nubmer set, that means we have cocktail elements and we can render the button, if
   // not we will render nothing
-  const buttomHTML = (cocktailList.drinks) ? (<button className="btn" onClick={handleRandomizeClick}>Randomize</button>) : null
+  const buttomHTML = (cocktailList.drinks)
+    ? (<button className="btn waves-effect waves-light red" onClick={handleRandomizeClick}><i className="material-icons left">casino</i>Randomize</button>)
+    : null
   // return the cocktail elements
   return (
     <div className="container CocktailList">

@@ -35,9 +35,10 @@ function CocktailDetails() {
                     ])
                 }
             }
-
-            const ingrediantElements = ingrediants.map(ingrediant => (
-                <p key={`ingredient-${ingrediant}`}>{ingrediant}</p>
+            // to fix the unique key prop I am adding the array index as well (from the paramter idx from .map)
+            // because some ingrediants will have the exact same name
+            const ingrediantElements = ingrediants.map((ingrediant, idx) => (
+                <p key={`ingredient-${ingrediant}-${idx}`}>{ingrediant}</p>
             ))
 
             // after dealing with the ingrediants array we can return the jsx element of the cocktail
