@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import fetchCocktail from "../helpers/cocktail.service";
+import RandomCocktail from './RandomCocktail'
+
 function CocktailList({ searchTerm }) {
   // create the cocktail list and the setter function
   const [cocktailList, setCocktailList] = useState([]);
@@ -42,7 +44,7 @@ function CocktailList({ searchTerm }) {
       .map(mapCocktailElements)
       .slice(randomNum, randomNum + numberCards)
   ) : (
-      <div>Search for a valid alcoholic ingredient</div>
+      <div>Search for a valid alcoholic ingredient <RandomCocktail mappingFunction={mapCocktailElements} /></div>
     );
 
   // callback function to randomize the drink list and return a new list
@@ -54,7 +56,7 @@ function CocktailList({ searchTerm }) {
 
   // check if we have a random nubmer set, that means we have cocktail elements and we can render the button, if
   // not we will render nothing
-  const buttomHTML = (cocktailList.drinks) ? (<a href="#" className="btn" onClick={handleRandomizeClick}>Randomize</a>) : null
+  const buttomHTML = (cocktailList.drinks) ? (<button className="btn" onClick={handleRandomizeClick}>Randomize</button>) : null
   // return the cocktail elements
   return (
     <div className="container CocktailList">
