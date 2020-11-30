@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import fetchCocktail from "../helpers/cocktail.service";
 function CocktailList({ searchTerm }) {
   // create the cocktail list and the setter function

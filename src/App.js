@@ -9,7 +9,7 @@ import CocktailDetails from './components/CocktailDetails'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-
+  // const [homeCounter, setHomeCounter] = useState(0)
 
   return (
     <div className="Random Cocktail App">
