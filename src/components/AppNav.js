@@ -4,13 +4,13 @@ import { NavLink } from "react-router-dom";
 function AppNav() {
   return (
     <nav>
-      <div className="nav-wrapper">
-        <NavLink to="/" className="brand-logo center">
+      <div className="nav-wrapper red">
+        <NavLink to="/" className="brand-logo center black-text">
           Cocktail App
         </NavLink>
         <ul id="nav-mobile" className="right">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink className="black-text" to="/">Home</NavLink>
           </li>
         </ul>
       </div>

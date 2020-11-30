@@ -14,11 +14,10 @@ import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 
 const fileCache = "cocktail-dynamic";
-// create the list of static assets
+// create the list of static assets, only need to cache our added assets like images
+// because react with these settings will use the InjectManifest plugin from workbox
+// to precache all of our css, js and html that is compiled by react
 const staticAssets = [
-  '/static/js',
-  '/static/css',
-  '/index.html',
   '/img/icon/cocktail_icon-512.png',
   '/img/icon/cocktail_icon-192.png',
   '/img/icon/cocktail_icon-64.png',
@@ -78,13 +77,13 @@ registerRoute(
   })
 );
 
-// self.addEventListener("install", function (event) {
-//   event.waitUntil(
-//     caches.open(fileCache).then(function (cache) {
-//       return cache.addAll(["/css/bootstrap.css"]);
-//     })
-//   );
-// });
+self.addEventListener("install", function (event) {
+  event.waitUntil(
+    caches.open(fileCache).then(function (cache) {
+      return cache.addAll(staticAssets);
+    })
+  );
+});
 
 self.addEventListener("fetch", function (event) {
   event.respondWith(
