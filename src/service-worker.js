@@ -18,6 +18,7 @@ const fileCache = "cocktail-dynamic";
 // because react with these settings will use the InjectManifest plugin from workbox
 // to precache all of our css, js and html that is compiled by react
 const staticAssets = [
+  '/img/favicon.ico',
   '/img/icon/cocktail_icon-512.png',
   '/img/icon/cocktail_icon-192.png',
   '/img/icon/cocktail_icon-64.png',
