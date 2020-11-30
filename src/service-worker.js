@@ -14,6 +14,19 @@ import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 
 const fileCache = "cocktail-dynamic";
+// create the list of static assets
+const staticAssets = [
+  '/static/js',
+  '/static/css',
+  '/index.html',
+  '/img/icon/cocktail_icon-512.png',
+  '/img/icon/cocktail_icon-192.png',
+  '/img/icon/cocktail_icon-64.png',
+  '/img/icon/cocktail_icon-32.png',
+  '/img/icon/cocktail_icon-24.png',
+  '/img/icon/cocktail_icon-16.png',
+  '/manifest.json'
+];
 
 clientsClaim();
 
