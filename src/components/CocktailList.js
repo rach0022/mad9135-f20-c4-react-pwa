@@ -39,13 +39,11 @@ function CocktailList({ searchTerm }) {
     : 0;
 
   // map out the cocktail elements
-  let cocktailElements = cocktailList.drinks ? (
-    cocktailList.drinks
+  let cocktailElements = cocktailList.drinks
+    ? cocktailList.drinks
       .map(mapCocktailElements)
       .slice(randomNum, randomNum + numberCards)
-  ) : (
-      <div>Search for a valid alcoholic ingredient <RandomCocktail mappingFunction={mapCocktailElements} /></div>
-    );
+    : <RandomCocktail mappingFunction={mapCocktailElements} />
 
   // callback function to randomize the drink list and return a new list
   const handleRandomizeClick = ev => {
