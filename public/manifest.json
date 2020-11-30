@@ -8,6 +8,12 @@
       "type": "image/image/x-icon"
     },
     {
+      "src": "/img/icon/maskable_icon.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/img/icon/cocktail_icon-16.png",
       "type": "image/png",
       "sizes": "16x16"
@@ -38,6 +44,7 @@
       "sizes": "512x512"
     }
   ],
+  "orientation": "portrait-primary",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#38a4dd",

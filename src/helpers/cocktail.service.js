@@ -1,6 +1,7 @@
 const BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/'
 const COCKTAIL_LIST = '/filter.php?i='
 const COCKTAIL_BY_ID = '/lookup.php?i='
+// const RANDOM_COCKTAIL = '/random.php'
 const API_KEY = '1'
 
 /**

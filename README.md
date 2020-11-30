@@ -4,10 +4,12 @@
 
 ## To Do:
 
+- [ ] add a randomize button to give a new set of drinks?
 - [ ] show cocktail of the day of the main page
 - [ ] show loader when the search is happening
 - [ ] prompt user for the install after clicking the main page 3 times
 - [ ] get a custom google font for the app (Serif: Sans-Serif: )
+- [ ] use code splitting to improve lighthouse score?
 
 ## Instructions
 
