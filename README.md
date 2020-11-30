@@ -4,12 +4,12 @@
 
 ## To Do:
 
-- [ ] add a randomize button to give a new set of drinks?
-- [ ] show cocktail of the day of the main page
+- [x] add a randomize button to give a new set of drinks
+- [x] show cocktail of the day of the main page
 - [ ] show loader when the search is happening
 - [ ] prompt user for the install after clicking the main page 3 times
-- [ ] get a custom google font for the app (Serif: Sans-Serif: )
-- [ ] use code splitting to improve lighthouse score?
+- [x] get a custom google font for the app (Serif: Sans-Serif: ) | we use materilize-css which already calls google fonts
+- [x] use code splitting to improve lighthouse score
 
 ## Instructions
 
