@@ -49,7 +49,7 @@ function CocktailList({ searchTerm }) {
   const handleRandomizeClick = ev => {
     ev.preventDefault()
     cocktailElements = cocktailList.drinks.map(mapCocktailElements).slice(randomNum, randomNum + numberCards)
-    setElements(Math.random())
+    setElements(elements + Math.random())
   }
 
   // check if we have a random nubmer set, that means we have cocktail elements and we can render the button, if
