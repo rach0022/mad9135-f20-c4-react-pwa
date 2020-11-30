@@ -18,14 +18,14 @@ const fileCache = "cocktail-dynamic";
 // because react with these settings will use the InjectManifest plugin from workbox
 // to precache all of our css, js and html that is compiled by react
 const staticAssets = [
-  '/img/favicon.ico',
-  '/img/icon/cocktail_icon-512.png',
-  '/img/icon/cocktail_icon-192.png',
-  '/img/icon/cocktail_icon-64.png',
-  '/img/icon/cocktail_icon-32.png',
-  '/img/icon/cocktail_icon-24.png',
-  '/img/icon/cocktail_icon-16.png',
-  '/manifest.json'
+  "/img/favicon.ico",
+  "/img/icon/cocktail_icon-512.png",
+  "/img/icon/cocktail_icon-192.png",
+  "/img/icon/cocktail_icon-64.png",
+  "/img/icon/cocktail_icon-32.png",
+  "/img/icon/cocktail_icon-24.png",
+  "/img/icon/cocktail_icon-16.png",
+  "/manifest.json"
 ];
 
 clientsClaim();
@@ -73,26 +73,39 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 1209600 }),
-    ],
+      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 1209600 })
+    ]
   })
 );
 
-self.addEventListener("install", function (event) {
+// Cache Google Fonts with a stale-while-revalidate strategy, with
+// a maximum number of entries.
+registerRoute(
+  ({ url }) =>
+    url.origin === "https://fonts.googleapis.com" ||
+    url.origin === "https://fonts.gstatic.com",
+  new StaleWhileRevalidate({
+    cacheName: fileCache,
+    plugins: [new ExpirationPlugin({ maxEntries: 20 })]
+  })
+);
+// this is where we keep our register route seperate from our listeners
+
+self.addEventListener("install", function(event) {
   event.waitUntil(
-    caches.open(fileCache).then(function (cache) {
+    caches.open(fileCache).then(function(cache) {
       return cache.addAll(staticAssets);
     })
   );
 });
 
-self.addEventListener("fetch", function (event) {
+self.addEventListener("fetch", function(event) {
   event.respondWith(
-    caches.open(fileCache).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
+    caches.open(fileCache).then(function(cache) {
+      return cache.match(event.request).then(function(response) {
         return (
           response ||
-          fetch(event.request).then(function (response) {
+          fetch(event.request).then(function(response) {
             cache.put(event.request, response.clone());
             return response;
           })
@@ -104,7 +117,7 @@ self.addEventListener("fetch", function (event) {
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
-self.addEventListener("message", (event) => {
+self.addEventListener("message", event => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
