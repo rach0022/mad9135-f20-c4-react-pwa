@@ -26,7 +26,6 @@ function CocktailDetails() {
             // and the ingrediant to display in seperate elements for styling
             let ingrediants = []
             for (let i = 1; i <= 15; i++) {
-                console.log(cocktail[`strIngredient1`])
 
                 if (cocktail[`strIngredient${i}`] !== null) {
                     ingrediants.push([
@@ -65,7 +64,7 @@ function CocktailDetails() {
         : null
 
     // return the cocktailElement which is either empty or has the cocktail details
-    return <div>{cocktailElement}</div>
+    return <div className="CocktailDetails">{cocktailElement}</div>
 }
 
 export default CocktailDetails

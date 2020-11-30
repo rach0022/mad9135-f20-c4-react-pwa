@@ -11,8 +11,8 @@ function SearchForm({ searchTerm, setter }) {
     return (
         <form className="container" type="submit" onSubmit={submitSearchTerm}>
             <div className="input-field col 6">
-                <i class="material-icons prefix">local_bar</i>
-                <label for="search-bar">Search Alcoholic Ingredient</label>
+                <i className="material-icons prefix">local_bar</i>
+                <label htmlFor="search-bar">Search Alcoholic Ingredient</label>
                 <input
                     className="center-align"
                     type="text"

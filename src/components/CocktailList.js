@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import fetchCocktail from "../helpers/cocktail.service";
 function CocktailList({ searchTerm }) {
   // create the cocktail list and the setter function
@@ -29,7 +29,7 @@ function CocktailList({ searchTerm }) {
             </div>
             <div className="card-action">
               <Link to={`/cocktail/${cocktail.idDrink}`}>
-                <p class="flow-text">{cocktail.strDrink} </p>
+                <p className="flow-text">{cocktail.strDrink} </p>
               </Link>
             </div>
           </div>
@@ -42,7 +42,7 @@ function CocktailList({ searchTerm }) {
 
   // return the cocktail elements
   return (
-    <div className="container">
+    <div className="container CocktailList">
       <div className="row">{cocktailElements}</div>
     </div>
   );

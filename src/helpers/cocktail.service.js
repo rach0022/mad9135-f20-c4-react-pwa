@@ -17,7 +17,6 @@ export async function fetchCocktail({ getList = null, search }) {
     // make the fetch call and throw an error if it fails
     const response = await fetch(url)
     if (!response.ok) throw new Error(response.statusText)
-    console.log(response)
     return response.json()
 }
 
