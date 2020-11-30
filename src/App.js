@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import AppNav from './components/AppNav'
 import CocktailList from './components/CocktailList'
+import InstallBanner from './components/InstallBanner'
 import SearchForm from './components/SearchForm'
 import CocktailDetails from './components/CocktailDetails'
 
