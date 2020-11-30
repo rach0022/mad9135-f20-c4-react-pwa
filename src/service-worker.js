@@ -18,7 +18,7 @@ const fileCache = "cocktail-dynamic";
 // because react with these settings will use the InjectManifest plugin from workbox
 // to precache all of our css, js and html that is compiled by react
 const staticAssets = [
-  "/img/favicon.ico",
+  "/favicon.ico",
   "/img/icon/cocktail_icon-512.png",
   "/img/icon/cocktail_icon-192.png",
   "/img/icon/cocktail_icon-64.png",
@@ -91,21 +91,21 @@ registerRoute(
 );
 // this is where we keep our register route seperate from our listeners
 
-self.addEventListener("install", function(event) {
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open(fileCache).then(function(cache) {
+    caches.open(fileCache).then(function (cache) {
       return cache.addAll(staticAssets);
     })
   );
 });
 
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", function (event) {
   event.respondWith(
-    caches.open(fileCache).then(function(cache) {
-      return cache.match(event.request).then(function(response) {
+    caches.open(fileCache).then(function (cache) {
+      return cache.match(event.request).then(function (response) {
         return (
           response ||
-          fetch(event.request).then(function(response) {
+          fetch(event.request).then(function (response) {
             cache.put(event.request, response.clone());
             return response;
           })
