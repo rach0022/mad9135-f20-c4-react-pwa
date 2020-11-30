@@ -1,11 +1,11 @@
 {
-  "short_name": "Cocktails",
-  "name": "Cocktail App",
+  "short_name": "Cocktail App",
+  "name": "Random Cocktail App",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "xicon/ico"
+      "type": "image/image/x-icon"
     },
     {
       "src": "/img/icon/cocktail_icon-16.png",
@@ -40,6 +40,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#38a4dd",
   "background_color": "#ffffff"
 }
