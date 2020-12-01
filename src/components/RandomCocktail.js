@@ -20,8 +20,8 @@ function RandomCocktail({ mappingFunction }) {
     // if they dont exist
     return (
         <div className="RandomCocktail container">
-            <h1 className="flow-text">Welcome to the Random Cocktail App</h1>
-            <h4 className="flow-text">Search for an alcoholic ingrediant like "{cocktail?.drinks[0].strIngredient1 || 'sugar'}" or "{cocktail?.drinks[0].strIngredient2 || "gin"}" and get a random cocktail like below</h4>
+            <h1 className="">Welcome to the Random Cocktail App</h1>
+            <h4 className="">Search for an alcoholic ingrediant like "{cocktail?.drinks[0].strIngredient1 || 'sugar'}" or "{cocktail?.drinks[0].strIngredient2 || "gin"}" and get a random cocktail like below</h4>
             {cocktailElement}
         </div>
     )
