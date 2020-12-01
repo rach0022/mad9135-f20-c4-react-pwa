@@ -11,7 +11,7 @@ import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
+import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
 // Used for filtering matches based on status code, header, or both
 // import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
@@ -87,15 +87,36 @@ registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
     url.pathname.match(/\.(png|jpg|jpeg|ico)$/g), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "images",
+  new CacheFirst({
+    cacheName: fileCache,
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 1209600 })
+      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 14 }) // 14 days in seconds
     ]
   })
 );
+
+// Cache requests from the CocktailDB Api with a stale while revalidate strategy
+// Cache Google Fonts with a stale-while-revalidate strategy, with
+// a maximum number of entries.
+registerRoute(
+  ({ url }) =>
+    url.origin === "https://thecocktaildb.com/",
+  new StaleWhileRevalidate({
+    cacheName: fileCache,
+    plugins: [new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 })] // Do we want to update every day?
+  })
+);
+
+// // For the random cocktail do we want to update every 5 minutes?
+// registerRoute(
+//   ({ url }) => url.origin === "https://thecocktaildb.com/random.php",
+//   new StaleWhileRevalidate({
+//     cacheName: fileCache,
+//     plugins: [new ExpirationPlugin({ maxAgeSeconds: 10 })] // Do we want to update every 10 seconds?
+//   })
+// );
 
 // Cache Google Fonts with a stale-while-revalidate strategy, with
 // a maximum number of entries.
@@ -103,9 +124,10 @@ registerRoute(
   ({ url }) =>
     url.origin === "https://fonts.googleapis.com" ||
     url.origin === "https://fonts.gstatic.com",
+  // url.origin === "https://cdnjs.cloudflare.com/",
   new StaleWhileRevalidate({
     cacheName: fileCache,
-    plugins: [new ExpirationPlugin({ maxEntries: 20 })]
+    plugins: [new ExpirationPlugin({ maxEntries: 40 })] // should we check the max entries from materilize?
   })
 );
 // this is where we keep our register route seperate from our listeners
@@ -133,6 +155,21 @@ self.addEventListener("fetch", function (event) {
     })
   );
 });
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     caches.open(fileCache).then(function (cache) {
+//       return cache.match(event.request).then(function (response) {
+//         return (
+//           // moved the fetch to be returned first if it fails we return the cached response
+//           fetch(event.request).then(function (response) {
+//             cache.put(event.request, response.clone());
+//             return response;
+//           }) || response
+//         );
+//       });
+//     })
+//   );
+// });
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
