@@ -7,13 +7,17 @@ function CocktailDetails({ data, setter }) {
     // an empty array
     const { id } = useParams()
     const [cocktail, setCocktail] = useState([])
+    // set the name of the delete button based on if it has been saved by the user
+    const buttonName = (data.findIndex(drink => drink.idDrink === id) > -1) ? 'Delete' : 'Save'
 
     // now we can fetch the specific cocktail details with the useEffect function
     // and set the depandancies as the id
     useEffect(() => {
+        // fetch the cocktail if we don't get anything set an empty string 
         fetchCocktail({ getList: false, search: `${id}` })
             .then(setCocktail)
             .catch(err => setCocktail(''))
+
     }, [id])
 
     // create a callback function to add a drink to the data array or delete it depending on the state of the saved
@@ -81,7 +85,7 @@ function CocktailDetails({ data, setter }) {
                                 <p className="card-title">Ingredients:</p>
                                 {ingrediantElements}
                                 <div className="card-action">
-                                    <button onClick={savedCocktailCallback} className="btn btn-info waves-effect">Save</button>
+                                    <button onClick={savedCocktailCallback} className="btn btn-info waves-effect">{buttonName}</button>
                                 </div>
                             </div>
                         </div>
