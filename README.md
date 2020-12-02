@@ -27,13 +27,13 @@
 - [x] At least two pages with a summary/detail navigation using React Router
 - [x] The main page should feature an image
 - [x] The app should use a custom Google Font
-- [ ] All UI assets should be pre-cached
+- [x] All UI assets should be pre-cached
 - [x] The app should display some dynamic data retrieved from an external API. Make sure that the data you are fetching will be different on a regular basis. Think of something like weather, stocks, crypto currencies, etc.
 - [x] API data should be cached using a StaleWhileRevalidate strategy
   - When the first call to the API is made, cache the response JSON file.
   - When the app is offline, use the cached version of the last JSON file fetched.
 - [x] Other image assets that might be fetched from external sources should be cached using a CacheFirst strategy. This cache should be limited to 50 items and all items should expire after 14 days.
-- [ ] After the user has visited the main page of the app three times, prompt to install. See Patterns for promoting PWA installation for design ideas.
+- [x] After the user has visited the main page of the app three times, prompt to install. See Patterns for promoting PWA installation for design ideas.
 
 ### Code management
 

@@ -5,7 +5,7 @@ import AppNav from './components/AppNav'
 const CocktailList = React.lazy(() => import('./components/CocktailList'))
 const SearchForm = React.lazy(() => import('./components/SearchForm'))
 const CocktailDetails = React.lazy(() => import('./components/CocktailDetails'))
-
+const InstallBanner = React.lazy(() => import('./components/InstallBanner'))
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
   // const [homeCounter, setHomeCounter] = useState(0)
@@ -18,7 +18,10 @@ function App() {
         {/* While the componenets are rendering */}
         <Switch>
           <Suspense fallback={<div>Loading...</div>}>
+
+
             <Route exact path="/">
+              <InstallBanner />
               <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
               <CocktailList searchTerm={searchTerm} />
             </Route>
