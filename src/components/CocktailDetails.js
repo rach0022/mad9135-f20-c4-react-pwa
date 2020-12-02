@@ -35,9 +35,10 @@ function CocktailDetails() {
                     ])
                 }
             }
-
-            const ingrediantElements = ingrediants.map(ingrediant => (
-                <p key={`ingredient-${ingrediant}`}>{ingrediant}</p>
+            // to fix the unique key prop I am adding the array index as well (from the paramter idx from .map)
+            // because some ingrediants will have the exact same name
+            const ingrediantElements = ingrediants.map((ingrediant, idx) => (
+                <p key={`ingredient-${ingrediant}-${idx}`}>{ingrediant}</p>
             ))
 
             // after dealing with the ingrediants array we can return the jsx element of the cocktail
@@ -53,7 +54,15 @@ function CocktailDetails() {
                         </div>
                         <div className='card-stacked'>
                             <div className='card-content'>
+                                <p className="card-title">Category: <span className="text-muted">{cocktail.strCategory || "none"}</span></p>
+                                <p className="card-title">{cocktail.strAlcoholic}</p>
+                                <p className="card-title">Glass: <span className="text-muted">{cocktail.strGlass || "any"}</span></p>
+                                {/* <p className="card-title" title="The category of drink">{cocktail.strCategory}</p>
+                                <p className="card-title" title="The alcoholic type of this drink">{cocktail.strAlcoholic}</p>
+                                <p className="card-title" title="Type of Glass">{cocktail.strGlass}</p> */}
+                                <p className="card-title">Instructions:</p>
                                 <p>{cocktail.strInstructions}</p>
+                                <p className="card-title">Ingredients:</p>
                                 {ingrediantElements}
                             </div>
                         </div>

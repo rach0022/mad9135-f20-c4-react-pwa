@@ -11,14 +11,16 @@ import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
+import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
+// Used for filtering matches based on status code, header, or both
+// import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 const fileCache = "cocktail-dynamic";
 // create the list of static assets, only need to cache our added assets like images
 // because react with these settings will use the InjectManifest plugin from workbox
 // to precache all of our css, js and html that is compiled by react
 const staticAssets = [
-  "/img/favicon.ico",
+  "/favicon.ico",
   "/img/icon/cocktail_icon-512.png",
   "/img/icon/cocktail_icon-192.png",
   "/img/icon/cocktail_icon-64.png",
@@ -35,6 +37,23 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 precacheAndRoute(self.__WB_MANIFEST);
+
+// Cache page navigations (html) with a Network First strategy
+// registerRoute(
+//   // Check to see if the request is a navigation to a new page
+//   ({ request }) => request.mode === 'navigate',
+//   // Use a Network First caching strategy
+//   new NetworkFirst({
+//     // Put all cached files in a cache named 'pages'
+//     cacheName: fileCache,
+//     plugins: [
+//       // Ensure that only requests that result in a 200 status are cached
+//       new CacheableResponsePlugin({
+//         statuses: [200],
+//       }),
+//     ],
+//   }),
+// );
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -68,15 +87,36 @@ registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
     url.pathname.match(/\.(png|jpg|jpeg|ico)$/g), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "images",
+  new CacheFirst({
+    cacheName: fileCache,
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 1209600 })
+      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 14 }) // 14 days in seconds
     ]
   })
 );
+
+// Cache requests from the CocktailDB Api with a stale while revalidate strategy
+// Cache Google Fonts with a stale-while-revalidate strategy, with
+// a maximum number of entries.
+registerRoute(
+  ({ url }) =>
+    url.origin === "https://thecocktaildb.com/",
+  new StaleWhileRevalidate({
+    cacheName: fileCache,
+    plugins: [new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 })] // Do we want to update every day?
+  })
+);
+
+// // For the random cocktail do we want to update every 5 minutes?
+// registerRoute(
+//   ({ url }) => url.origin === "https://thecocktaildb.com/random.php",
+//   new StaleWhileRevalidate({
+//     cacheName: fileCache,
+//     plugins: [new ExpirationPlugin({ maxAgeSeconds: 10 })] // Do we want to update every 10 seconds?
+//   })
+// );
 
 // Cache Google Fonts with a stale-while-revalidate strategy, with
 // a maximum number of entries.
@@ -84,28 +124,29 @@ registerRoute(
   ({ url }) =>
     url.origin === "https://fonts.googleapis.com" ||
     url.origin === "https://fonts.gstatic.com",
+  // url.origin === "https://cdnjs.cloudflare.com/",
   new StaleWhileRevalidate({
     cacheName: fileCache,
-    plugins: [new ExpirationPlugin({ maxEntries: 20 })]
+    plugins: [new ExpirationPlugin({ maxEntries: 40 })] // should we check the max entries from materilize?
   })
 );
 // this is where we keep our register route seperate from our listeners
 
-self.addEventListener("install", function(event) {
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open(fileCache).then(function(cache) {
+    caches.open(fileCache).then(function (cache) {
       return cache.addAll(staticAssets);
     })
   );
 });
 
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", function (event) {
   event.respondWith(
-    caches.open(fileCache).then(function(cache) {
-      return cache.match(event.request).then(function(response) {
+    caches.open(fileCache).then(function (cache) {
+      return cache.match(event.request).then(function (response) {
         return (
           response ||
-          fetch(event.request).then(function(response) {
+          fetch(event.request).then(function (response) {
             cache.put(event.request, response.clone());
             return response;
           })
@@ -114,6 +155,21 @@ self.addEventListener("fetch", function(event) {
     })
   );
 });
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     caches.open(fileCache).then(function (cache) {
+//       return cache.match(event.request).then(function (response) {
+//         return (
+//           // moved the fetch to be returned first if it fails we return the cached response
+//           fetch(event.request).then(function (response) {
+//             cache.put(event.request, response.clone());
+//             return response;
+//           }) || response
+//         );
+//       });
+//     })
+//   );
+// });
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})

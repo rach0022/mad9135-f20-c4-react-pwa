@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import fetchCocktail from "../helpers/cocktail.service";
+import RandomCocktail from './RandomCocktail'
+
 function CocktailList({ searchTerm }) {
   // create the cocktail list and the setter function
   const [cocktailList, setCocktailList] = useState([]);
@@ -11,7 +13,7 @@ function CocktailList({ searchTerm }) {
   useEffect(() => {
     fetchCocktail({ getList: true, search: searchTerm })
       .then(setCocktailList)
-      .catch((err) => setCocktailList(""));
+      .catch((err) => setCocktailList(err));
   }, [searchTerm]);
 
   // now with the list we can create the cocktailElements to display by checking if we have the
@@ -37,13 +39,11 @@ function CocktailList({ searchTerm }) {
     : 0;
 
   // map out the cocktail elements
-  let cocktailElements = cocktailList.drinks ? (
-    cocktailList.drinks
+  let cocktailElements = cocktailList.drinks
+    ? cocktailList.drinks
       .map(mapCocktailElements)
       .slice(randomNum, randomNum + numberCards)
-  ) : (
-      <div>Search for a valid alcoholic ingredient</div>
-    );
+    : <RandomCocktail mappingFunction={mapCocktailElements} />
 
   // callback function to randomize the drink list and return a new list
   const handleRandomizeClick = ev => {
@@ -54,7 +54,9 @@ function CocktailList({ searchTerm }) {
 
   // check if we have a random nubmer set, that means we have cocktail elements and we can render the button, if
   // not we will render nothing
-  const buttomHTML = (cocktailList.drinks) ? (<a href="#" className="btn" onClick={handleRandomizeClick}>Randomize</a>) : null
+  const buttomHTML = (cocktailList.drinks)
+    ? (<button className="btn waves-effect waves-light red" onClick={handleRandomizeClick}><i className="material-icons left">casino</i>Randomize</button>)
+    : null
   // return the cocktail elements
   return (
     <div className="container CocktailList">

@@ -25,6 +25,8 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
+    "preserver": "yarn run build",
+    "server": "npx serve build/",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

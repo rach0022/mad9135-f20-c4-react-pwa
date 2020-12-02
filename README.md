@@ -4,12 +4,12 @@
 
 ## To Do:
 
-- [ ] add a randomize button to give a new set of drinks?
-- [ ] show cocktail of the day of the main page
+- [x] add a randomize button to give a new set of drinks
+- [x] show cocktail of the day of the main page
 - [ ] show loader when the search is happening
 - [ ] prompt user for the install after clicking the main page 3 times
-- [ ] get a custom google font for the app (Serif: Sans-Serif: )
-- [ ] use code splitting to improve lighthouse score?
+- [x] get a custom google font for the app (Serif: Sans-Serif: ) | we use materilize-css which already calls google fonts
+- [x] use code splitting to improve lighthouse score
 
 ## Instructions
 
@@ -27,13 +27,13 @@
 - [x] At least two pages with a summary/detail navigation using React Router
 - [x] The main page should feature an image
 - [x] The app should use a custom Google Font
-- [ ] All UI assets should be pre-cached
+- [x] All UI assets should be pre-cached
 - [x] The app should display some dynamic data retrieved from an external API. Make sure that the data you are fetching will be different on a regular basis. Think of something like weather, stocks, crypto currencies, etc.
 - [x] API data should be cached using a StaleWhileRevalidate strategy
   - When the first call to the API is made, cache the response JSON file.
   - When the app is offline, use the cached version of the last JSON file fetched.
 - [x] Other image assets that might be fetched from external sources should be cached using a CacheFirst strategy. This cache should be limited to 50 items and all items should expire after 14 days.
-- [ ] After the user has visited the main page of the app three times, prompt to install. See Patterns for promoting PWA installation for design ideas.
+- [x] After the user has visited the main page of the app three times, prompt to install. See Patterns for promoting PWA installation for design ideas.
 
 ### Code management
 
