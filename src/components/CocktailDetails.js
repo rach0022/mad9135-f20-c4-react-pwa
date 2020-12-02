@@ -2,19 +2,39 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import fetchCocktail from '../helpers/cocktail.service'
 
-function CocktailDetails() {
+function CocktailDetails({ data, setter }) {
     // get the id from the route parameters and set the cocktail to useState initiall for
     // an empty array
     const { id } = useParams()
     const [cocktail, setCocktail] = useState([])
+    // set the name of the delete button based on if it has been saved by the user
+    const buttonName = (data.findIndex(drink => drink.idDrink === id) > -1) ? 'Delete' : 'Save'
 
     // now we can fetch the specific cocktail details with the useEffect function
     // and set the depandancies as the id
     useEffect(() => {
+        // fetch the cocktail if we don't get anything set an empty string 
         fetchCocktail({ getList: false, search: `${id}` })
             .then(setCocktail)
             .catch(err => setCocktail(''))
+
     }, [id])
+
+    // create a callback function to add a drink to the data array or delete it depending on the state of the saved
+    const savedCocktailCallback = ev => {
+        ev.preventDefault()
+        // check if the cocktail is in the array if it isnt then add it to the array, else delete from the array 
+        let targetID = data.findIndex(drink => drink.idDrink === id)
+        console.log(targetID, data, cocktail)
+        if (targetID === -1) {
+            setter([...data, cocktail.drinks[0]]) // add to the array
+            ev.currentTarget.textContent = 'Delete'
+        } else {
+            data.splice(targetID, 1) //delete from the array 
+            setter([...data])
+            ev.currentTarget.textContent = 'Save'
+        }
+    }
 
     // now we can create the cocktailElements by checking if we have a cocktail.drinks
     // (From the cocktail api) and then map the cocktail to a specific drink element
@@ -64,6 +84,9 @@ function CocktailDetails() {
                                 <p>{cocktail.strInstructions}</p>
                                 <p className="card-title">Ingredients:</p>
                                 {ingrediantElements}
+                                <div className="card-action">
+                                    <button onClick={savedCocktailCallback} className="btn btn-info waves-effect">{buttonName}</button>
+                                </div>
                             </div>
                         </div>
                     </div>

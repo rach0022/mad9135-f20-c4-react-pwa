@@ -9,9 +9,8 @@ function AppNav() {
           Cocktail App
         </NavLink>
         <ul id="nav-mobile" className="right">
-          <li>
-            <NavLink className="black-text" to="/">Home</NavLink>
-          </li>
+          <li><NavLink className="black-text" to="/">Search</NavLink></li>
+          <li><NavLink className="black-text" to="/saved">Saved</NavLink></li>
         </ul>
       </div>
     </nav>
