@@ -2,7 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import useLocalStorageState from './hooks/useLocalStorageState'
-import AppNav from './components/AppNav'
+const AppNav = React.lazy(() => import('./components/AppNav'))
 const CocktailList = React.lazy(() => import('./components/CocktailList'))
 const SearchForm = React.lazy(() => import('./components/SearchForm'))
 const CocktailDetails = React.lazy(() => import('./components/CocktailDetails'))
@@ -17,12 +17,14 @@ function App() {
   return (
     <div className="Random Cocktail App">
       <Router>
-        <AppNav />
         {/* Using React Suspense we can add a loading element */}
         {/* While the componenets are rendering */}
-        <Switch>
-          {/* If it takes too long for an element to load we will show a loading message */}
-          <Suspense fallback={<div>Loading...</div>}>
+        {/* If it takes too long for an element to load we will show a loading message */}
+        <Suspense fallback={<div>Loading...</div>}>
+          {/* Show the app navigation bar  */}
+          <AppNav />
+
+          <Switch>
 
             {/* Route for the home page */}
             <Route exact path="/">
@@ -30,6 +32,7 @@ function App() {
               <SearchForm searchTerm={searchTerm} setter={setSearchTerm} />
               <CocktailList searchTerm={searchTerm} />
             </Route>
+
             {/* Route for the cocktail details page */}
             <Route path="/cocktail/:id">
               {/* To check if the drink is already saved or to save a new drink send the props data and setter */}
@@ -41,8 +44,9 @@ function App() {
               {/* To check the drink list or to delete a drink send props data and setter */}
               <SavedCocktailList data={savedDrinks} setter={setSavedDrinks} />
             </Route>
-          </Suspense>
-        </Switch>
+
+          </Switch>
+        </Suspense>
       </Router>
     </div>
   );
